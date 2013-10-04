@@ -1,3 +1,7 @@
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+
+
 module.exports = function (app) {
   app.get('/', function (req, res, next) {
     res.render('index', {
@@ -5,22 +9,55 @@ module.exports = function (app) {
     });
   });
 
-  app.post('/login', function(req, res, next){
+  app.post('/*', function(req, res, next) {  // next is for promises
     var info = req.body;
-    console.log(info);
+
     User.findOne({
       'name': info.name
     }, function(err, profile) {
+      // need else if when we already have that user in the DB
+      // to send the information back
       if(err) {
         throw err;
-      } else if(profile) {
-        // start a session with their info
       } else {
-        profile.name = info.name;
-        profile.email = info.email;
-        profile.username = info.profile;
-        profile.gender = info.gender;
+        var newProfile = new User({
+          name: info.name,
+          email: info.email,
+          username: info.profile,
+          gender: info.gender
+        });
+
+        newProfile.save(function(err) {
+          if(err) {
+            throw err;
+          }
+          res.send(info);
+        });
       }
     });
   });
+
+  // User.findOne({
+  //     'name': 'mat'
+  //   }, function(err, profile) {
+  //     if(err) {
+  //       throw err;
+  //     } else if(profile) {
+  //       // start a session with their info
+  //     } else {
+        // var profile = new User({
+        //   name: 'matt',
+        //   email: 'matt@gmail.com',
+        //   username: 'matttt',
+        //   gender: 'female'
+        // });
+
+        // profile.save(function(err) {
+        //   if(err) {
+        //     throw err;
+        //   }
+
+        //});
+  //     }
+  //   });
 };

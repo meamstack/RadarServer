@@ -27,11 +27,15 @@ module.exports = function (app) {
     app.use(app.router);
     app.use(express.errorHandler());
 
-    var db = mongoose.connect('mongodb://localhost/meetmeDev');
-    var modelsPath = path.join(app.directory, '/server/models');
-    fs.readdirSync(modelsPath).forEach(function (file) {
-      require(modelsPath + '/' + file);
-    });
+    mongoose.connect('mongodb://localhost/meetmeDev');
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    // db.once('open', function() {
+      var modelsPath = path.join(app.directory, '/server/models');
+      fs.readdirSync(modelsPath).forEach(function (file) {
+        require(modelsPath + '/' + file);
+      });
+    // });
   });
 
 };
