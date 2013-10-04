@@ -328,6 +328,8 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('compass', ['stylus']);
+
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
