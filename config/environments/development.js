@@ -1,5 +1,6 @@
-var express = require('express'),
-    path = require('path');
+var express = require('express');
+var path = require('path');
+var mongoose = require('mongoose');
 
 module.exports = function (app) {
     app.configure('development', function () {
@@ -25,4 +26,13 @@ module.exports = function (app) {
         app.use(app.router);
         app.use(express.errorHandler());
     });
+    var db = mongoose.connect('mongodb://localhost/meetmeDev');
 };
+
+
+//passport session init
+
+//db
+//monogodb://localhost/collectionName
+
+//handle errors

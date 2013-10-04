@@ -23,30 +23,21 @@ module.exports = function (grunt) {
     yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
   } catch (e) {}
 
-  grunt.loadNpmTasks('grunt-express');
-  grunt.loadNpmTasks('grunt-topcoat');
 
   grunt.initConfig({
     yeoman: yeomanConfig,
-    watch: {
-      coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['coffee:dist']
-      },
-      coffeeTest: {
-        files: ['test/spec/{,*/}*.coffee'],
-        tasks: ['coffee:test']
-      },
-      livereload: {
+    pkg: grunt.file.readJSON('package.json'),
+    stylus: {
+      compile: {
         options: {
-          livereload: LIVERELOAD_PORT
+          paths: [
+            'node_modules/',
+            'styl/'
+          ]
         },
-        files: [
-          '<%= yeoman.app %>/{,*/}*.html',
-          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ]
+        files: {
+          'app/styles/main.css': 'app/styles/stylus/meetme.styl'
+        }
       }
     },
     express: {
@@ -288,8 +279,40 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    watch: {
+      coffee: {
+        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
+        tasks: ['coffee:dist']
+      },
+      coffeeTest: {
+        files: ['test/spec/{,*/}*.coffee'],
+        tasks: ['coffee:test']
+      },
+      livereload: {
+        options: {
+          livereload: LIVERELOAD_PORT
+        },
+        files: [
+          '<%= yeoman.app %>/{,*/}*.html',
+          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
+          '{.tmp,<%= yeoman.app %>}/styles/stylus/*.styl',
+          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+        ]
+      },
+      stylus: {
+        files: ['app/styles/stylus/*'],
+        tasks: ['stylus']
+      }
     }
   });
+
+
+  grunt.loadNpmTasks('grunt-express');
+  grunt.loadNpmTasks('grunt-topcoat');
+  grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
@@ -323,7 +346,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'stylus'
   ]);
 
   grunt.registerTask('default', [
