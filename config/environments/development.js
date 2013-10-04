@@ -28,7 +28,7 @@ module.exports = function (app) {
     app.use(express.errorHandler());
 
     var db = mongoose.connect('mongodb://localhost/meetmeDev');
-    var modelsPath = path.normalize(__dirname) + '/server/models';
+    var modelsPath = path.join(app.directory, '/server/models');
     fs.readdirSync(modelsPath).forEach(function (file) {
       require(modelsPath + '/' + file);
     });
