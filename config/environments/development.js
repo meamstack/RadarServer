@@ -2,6 +2,8 @@ var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
 var fs = require('fs');
+var passport = require('passport')
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = function (app) {
   app.configure('development', function () {
@@ -28,15 +30,26 @@ module.exports = function (app) {
     app.use(express.errorHandler());
 
     mongoose.connect('mongodb://localhost/meetmeDev');
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    // db.once('open', function() {
-      var modelsPath = path.join(app.directory, '/server/models');
-      fs.readdirSync(modelsPath).forEach(function (file) {
-        require(modelsPath + '/' + file);
-      });
-    // });
+    var modelsPath = path.join(app.directory, '/server/models');
+    fs.readdirSync(modelsPath).forEach(function (file) {
+      require(modelsPath + '/' + file);
+    });
   });
+
+
+  passport.use(new FacebookStrategy({
+    clientID: FACEBOOK_APP_ID,
+    clientSecret: FACEBOOK_APP_SECRET,
+    callbackURL: "http://www.example.com/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate(..., function(err, user) {
+      if (err) { return done(err); }
+      done(null, user);
+    });
+  }
+));
+
 
 };
 

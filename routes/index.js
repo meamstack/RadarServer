@@ -9,7 +9,7 @@ module.exports = function (app) {
     });
   });
 
-  app.post('/*', function(req, res, next) {  // next is for promises
+  app.post('#/login', function(req, res, next) {  // next is for promises
     var info = req.body;
 
     User.findOne({
@@ -36,28 +36,4 @@ module.exports = function (app) {
       }
     });
   });
-
-  // User.findOne({
-  //     'name': 'mat'
-  //   }, function(err, profile) {
-  //     if(err) {
-  //       throw err;
-  //     } else if(profile) {
-  //       // start a session with their info
-  //     } else {
-        // var profile = new User({
-        //   name: 'matt',
-        //   email: 'matt@gmail.com',
-        //   username: 'matttt',
-        //   gender: 'female'
-        // });
-
-        // profile.save(function(err) {
-        //   if(err) {
-        //     throw err;
-        //   }
-
-        //});
-  //     }
-  //   });
 };
