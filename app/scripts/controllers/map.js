@@ -1,5 +1,5 @@
 angular.module('meetmeApp')
-  .controller('MainCtrl', ['$scope','$http',function ($scope, $http) {
+  .controller('MapCtrl', ['$scope','$http',function ($scope, $http) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
