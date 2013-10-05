@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
 var fs = require('fs');
-var passport = require('passport')
+var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = function (app) {
@@ -21,6 +21,9 @@ module.exports = function (app) {
     app.use(express.methodOverride());
     app.use(express.cookieParser('your secret here'));
     app.use(express.session());
+    //use passport session
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     app.use(function middlewarePlaceholder(req, res, next) {
       return next();
@@ -36,19 +39,49 @@ module.exports = function (app) {
     });
   });
 
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function(id, done) {
+      User.findOne({
+        _id: id
+      }, function(err, user) {
+        done(err, user);
+      });
+  });
+
+  var User = mongoose.model('User');
 
   passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://www.example.com/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate(..., function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });
-  }
-));
+    clientID: process.env.FACEBOOK_MEETME_APIKEY,
+    clientSecret: process.env.FACEBOOK_MEETME_APPSECRET,
+    callbackURL: "http://meetme123.com:3000/auth/facebook/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+      console.log('accessToken',accessToken)
+      User.findOne({'facebook.id': profile.id},function(err, user){
+        if(err) { return done(err); }
+        var newUser = new User({
+          name: profile.name,
+          email: profile.email,
+          gender: profile.gender
+        });
+
+        newUser.save(function(err) {
+          if(err) {
+            throw err;
+          }
+          return done(err, user);
+          // res.send('User saved successfully.');
+        });
+      });
+      // User.findOrCreate(function(err, user) {
+      //   if (err) { return done(err); }
+      //   done(null, user);
+      // });
+    }
+  ));
 
 
 };
