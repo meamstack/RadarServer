@@ -1,4 +1,4 @@
-angular.module('meetmeApp')
+angular.module('meetmeApp', [])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
