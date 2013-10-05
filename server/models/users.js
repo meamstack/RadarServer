@@ -5,8 +5,9 @@ var UserSchema = new Schema ({
   name: String,
   email: String,
   gender: String,
+  facebook: {},
   eventsCreated: [Schema.Types.ObjectId],
-  eventsSaved: [Schema.Types.ObjectId]
+  eventsSaved: [Schema.Types.ObjectId],
 });
 
 var EventSchema = new Schema ({

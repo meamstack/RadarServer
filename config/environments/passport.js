@@ -28,7 +28,8 @@ passport.use(new FacebookStrategy({
       var newUser = new User({
         name: profile.name,
         email: profile.email,
-        gender: profile.gender
+        gender: profile.gender,
+        // facebook.accessToken: accessToken
       });
 
       newUser.save(function(err) {
