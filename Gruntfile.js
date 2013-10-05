@@ -27,19 +27,6 @@ module.exports = function (grunt) {
   grunt.initConfig({
     yeoman: yeomanConfig,
     pkg: grunt.file.readJSON('package.json'),
-    stylus: {
-      compile: {
-        options: {
-          paths: [
-            'node_modules/',
-            'styl/'
-          ]
-        },
-        files: {
-          'app/styles/main.css': 'app/styles/stylus/meetme.styl'
-        }
-      }
-    },
     express: {
       options: {
         port: 3000,
@@ -300,10 +287,6 @@ module.exports = function (grunt) {
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
-      },
-      stylus: {
-        files: ['app/styles/stylus/*'],
-        tasks: ['stylus']
       }
     }
   });
@@ -311,7 +294,6 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-express');
   grunt.loadNpmTasks('grunt-topcoat');
-  grunt.loadNpmTasks('grunt-contrib-stylus');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('server', function (target) {
@@ -328,7 +310,6 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('compass', ['stylus']);
 
   grunt.registerTask('test', [
     'clean:server',
@@ -348,8 +329,7 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin',
-    'stylus'
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
