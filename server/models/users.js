@@ -10,14 +10,4 @@ var UserSchema = new Schema ({
   eventsSaved: [Schema.Types.ObjectId],
 });
 
-var EventSchema = new Schema ({
-  name: String,
-  description: String,
-  location: [Number],
-  time: Date,
-  photo: Buffer,
-  activity: String
-});
-
 mongoose.model('User', UserSchema);
-mongoose.model('Event', EventSchema);
