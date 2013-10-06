@@ -24,15 +24,29 @@ passport.use(new FacebookStrategy({
   function(accessToken, refreshToken, profile, done) {
     console.log('accessToken',accessToken)
     User.findOne({'facebook.id': profile.id},function(err, user){
-      if(err) { return done(err); }
-      var newUser = new User({
-        name: profile.name,
-        email: profile.email,
-        gender: profile.gender,
-        // facebook.accessToken: accessToken
-      });
+      if(err) {
+        return done(err);
+      } else if(!user) {
+        user = new User({
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          gender: profile.gender,
+          facebook: {
+            id: profile.id,
+            accessToken: accessToken
+          }
+        });
+      } else {
+        user.name = profile.displayName,
+        user.email = profile.emails[0].value,
+        user.gender = profile.gender,
+        user.facebook = {
+          id: profile.id,
+          accessToken: accessToken
+        }
+      }
 
-      newUser.save(function(err) {
+      user.save(function(err) {
         if(err) {
           throw err;
         }
