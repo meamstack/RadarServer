@@ -46,30 +46,22 @@ module.exports = function (app) {
   app.post('/api/findEvents', function(req, res, next) {
     var options = req.body;
     var loc = JSON.parse(options.location);
-    var maxDistance = 0.09;
+    var maxDistance = 1000;  // 1000 meters
     var lonLat = {$geometry: {type: 'Point', coordinates: loc}};
 
-    Event.find({"location":
-      {"$geoWithin" :
-        {"$geometry" :
-          {"type": "Polygon",
-            "coordinates": [
-              [ [37.7, -122.4], [37.7, -122.5], [37.8, -122.5], [37.8, -122.4], [37.7, -122.4] ]  // longitude, latitude
-            ]
+    Event.find({ "location":
+      { "$near" :
+        {"$geometry":
+          {"type": "Point",
+            coordinates: [-122.4,37.7],
+            $maxDistance: maxDistance
           }
         }
-        // $near: lonLat,
-        // $maxDistance: maxDistance
       }
-    }
-      // 'location': { $near: [loc[0], loc[1]]},
-      // 'name': options.name,
-      // 'time': options.time
-    , function(err, data) {
+    }, function(err, data) {
       if(err) throw err;
       res.send(data);
     });
-
   });
 
   //Setting the facebook oauth routes
