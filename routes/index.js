@@ -42,37 +42,34 @@ module.exports = function (app) {
     });
   });
 
-  app.get('/api/findEvents', function(req, res, next) {
+  app.post('/api/findEvents', function(req, res, next) {
     var options = req.body;
-    // api will accept the 
+    var loc = JSON.parse(options.location);
+    var maxDistance = 0.09;
+    var lonLat = {$geometry: {type: 'Point', coordinates: loc}};
+
+    Event.find({"location":
+      {"$geoWithin" :
+        {"$geometry" :
+          {"type": "Polygon",
+            "coordinates": [
+              [ [37.7, -122.4], [37.7, -122.5], [37.8, -122.5], [37.8, -122.4], [37.7, -122.4] ]  // longitude, latitude
+            ]
+          }
+        }
+        // $near: lonLat,
+        // $maxDistance: maxDistance
+      }
+    }
+      // 'location': { $near: [loc[0], loc[1]]},
+      // 'name': options.name,
+      // 'time': options.time
+    , function(err, data) {
+      if(err) throw err;
+      res.send(data);
+    });
+
   });
-
-  // app.post('/login', function(req, res, next) {  // next is for promises
-  //   var info = req.body;
-
-  //   User.findOne({
-  //     'name': info.name
-  //   }, function(err, profile) {
-  //     // need else if when we already have that user in the DB
-  //     // to send the information back
-  //     if(err) {
-  //       throw err;
-  //     } else {
-  //       var newProfile = new User({
-  //         name: info.name,
-  //         email: info.email,
-  //         gender: info.gender
-  //       });
-
-  //       newProfile.save(function(err) {
-  //         if(err) {
-  //           throw err;
-  //         }
-  //         res.send(info);
-  //       });
-  //     }
-  //   });
-  // });
 
   //Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
