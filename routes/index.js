@@ -75,6 +75,7 @@ module.exports = function (app) {
 
   //Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
+    display: 'touch',
     scope: permissions,
     failureRedirect: '/'
   }), function(req, res) { res.redirect('/'); });
