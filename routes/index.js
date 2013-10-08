@@ -16,6 +16,7 @@ module.exports = function (app) {
 
   app.post('/api/createEvent', function(req, res, next) {
     var eventInfo = req.body;
+    console.log(eventInfo);
     var loc = JSON.parse(eventInfo.location);
     Event.findOne({
       'name': eventInfo.name,
