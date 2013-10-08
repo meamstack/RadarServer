@@ -46,20 +46,16 @@ module.exports = function (app) {
   app.post('/api/findEvents', function(req, res, next) {
     var options = req.body;
     var loc = JSON.parse(options.location);
-    var maxDistance = 1000;  // 1000 meters
+    var maxDistance = options.maxD*111.12;  // 1000 meters
     var lonLat = {$geometry: {type: 'Point', coordinates: loc}};
 
     Event.find({ "location":
-      { "$near" :
-        {"$geometry":
-          {"type": "Point",
-            coordinates: [-122.4,37.7],
-            $maxDistance: maxDistance
-          }
-        }
+      { "$near": [-122.4,37.7],
+        $maxDistance: maxDistance
       }
     }, function(err, data) {
       if(err) throw err;
+      console.log(maxDistance);
       res.send(data);
     });
   });

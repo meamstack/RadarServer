@@ -4,12 +4,12 @@ var Schema = mongoose.Schema;
 var EventSchema = new Schema ({
   name: String,
   description: String,
-  location: [],
-  // location: {type: [String], index: '2d'},
+  // location: [],
+  location: {type: [], index: '2d'},
   time: Date,
   photo: Buffer,
   activity: String
 });
 
-EventSchema.index({location: '2d'});
+// EventSchema.index({location: '2d'});
 mongoose.model('Event', EventSchema);
