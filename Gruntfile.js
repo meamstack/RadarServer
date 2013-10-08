@@ -52,6 +52,10 @@ module.exports = function (grunt) {
           bases: [path.resolve('./.tmp'), path.resolve(__dirname, yeomanConfig.app)]
         }
       },
+      stylus: {
+        files: ['app/styles/stylus/*'],
+        tasks: ['stylus']
+      },
       test: {
         options: {
           server: path.resolve('app.js'),
@@ -62,32 +66,6 @@ module.exports = function (grunt) {
         options: {
           server: path.resolve('app.js'),
           bases: path.resolve(__dirname, yeomanConfig.dist)
-        }
-      }
-    },
-    topcoat: {
-      options: {
-        repos: '<%= pkg.topcoat %>',
-        src: 'src',
-        controlsPath: '<%= topcoat.options.src %>/controls',
-        skinsPath: '<%= topcoat.options.src %>/skins',
-        themePath: '<%= topcoat.options.src %>/theme',
-        utilsPath: '<%= topcoat.options.src %>/utils'
-      },
-      download: {
-        options: {
-          hostname: 'https://github.com/',
-          proxy: '',
-          download: true,
-          compile: false
-        }
-      },
-      compile: {
-        options: {
-          themePrefix: 'theme',
-          download: false,
-          compile: true,
-          releasePath: 'css'
         }
       }
     },
@@ -179,7 +157,7 @@ module.exports = function (grunt) {
       }
     },
     cssmin: {
-      // By default, your `index.html` <!-- Usemin Block --> will take care of
+      // By default, your `index.html` <!- Usemin Block --> will take care of
       // minification. This option is pre-configured if you do not wish to use
       // Usemin blocks.
       // dist: {
@@ -300,10 +278,6 @@ module.exports = function (grunt) {
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
-      },
-      stylus: {
-        files: ['app/styles/stylus/*'],
-        tasks: ['stylus']
       }
     }
   });
@@ -328,7 +302,6 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('compass', ['stylus']);
 
   grunt.registerTask('test', [
     'clean:server',
@@ -348,8 +321,7 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin',
-    'stylus'
+    'usemin'
   ]);
 
   grunt.registerTask('default', [

@@ -8,21 +8,6 @@
   "engines": {
     "node": ">=0.8.0"
   },
-  "topcoat": {
-    "controls": {
-      "topcoat/button-base": "",
-      "topcoat/input-base": "0.1.0"
-    },
-    "skins": {
-      "topcoat/button": ""
-    },
-    "utils": {
-      "topcoat/utils": ""
-    },
-    "theme": {
-      "topcoat/theme": "0.4.0"
-    }
-  },
   "dependencies": {
     "express": "3.4.0",
     "ejs": "*",
@@ -55,7 +40,6 @@
     "grunt-google-cdn": "~0.2.0",
     "grunt-ngmin": "~0.0.2",
     "grunt-express": "~1.0.0",
-    "grunt-topcoat": "0.0.11",
     "grunt-contrib-stylus": "~0.8.0"
   }
 }
