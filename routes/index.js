@@ -46,16 +46,29 @@ module.exports = function (app) {
   app.post('/api/findEvents', function(req, res, next) {
     var options = req.body;
     var loc = JSON.parse(options.location);
-    var maxDistance = options.maxD*111.12;  // 1000 meters
-    var lonLat = {$geometry: {type: 'Point', coordinates: loc}};
+    var date = JSON.parse(options.date);
+    console.log(options.date);
+    var maxDistance = options.maxD;  // in degrees, if km is necessary, divide by 111.12
+    // new Date(year, month, day [, hour, minutes, second, milli])
+    var start =  new Date(date.year, date.month, date.day);
 
-    Event.find({ "location":
-      { "$near": [-122.4,37.7],
-        $maxDistance: maxDistance
+    var endDay = date.day + 3;
+    var end =  new Date(date.year, date.month, endDay);
+
+    start = start.toISOString();
+    end = end.toISOString();
+
+    Event.find({ 'location':
+      { '$near': [loc[0], loc[1]],
+        $maxDistance: maxDistance,
+      }, 'time': {
+        $gte: start,
+        $lte: end
       }
     }, function(err, data) {
       if(err) throw err;
       console.log(maxDistance);
+      console.log(loc[0], loc[1]);
       res.send(data);
     });
   });
