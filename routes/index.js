@@ -16,8 +16,6 @@ module.exports = function (app) {
 
   app.post('/api/createEvent', function(req, res, next) {
     var eventInfo = req.body;
-    console.log(eventInfo);
-    var loc = JSON.parse(eventInfo.location);
     Event.findOne({
       'name': eventInfo.name,
       'time': eventInfo.time
@@ -28,7 +26,7 @@ module.exports = function (app) {
         event = new Event({
           name: eventInfo.name,
           description: eventInfo.description,
-          location: [loc[0], loc[1]],
+          location: eventInfo.location,
           time: eventInfo.time,
           photo: eventInfo.photo,
           activity: eventInfo.activity
@@ -45,21 +43,18 @@ module.exports = function (app) {
 
   app.post('/api/findEvents', function(req, res, next) {
     var options = req.body;
-    var loc = JSON.parse(options.location);
-    var date = JSON.parse(options.date);
-    console.log(options.date);
     var maxDistance = options.maxD;  // in degrees, if km is necessary, divide by 111.12
     // new Date(year, month, day [, hour, minutes, second, milli])
-    var start =  new Date(date.year, date.month, date.day);
-
-    var endDay = date.day + 3;
-    var end =  new Date(date.year, date.month, endDay);
-
+    var start =  new Date(options.date.year, options.date.month, options.date.day);
+  
+    var endDay = JSON.stringify(+options.date.day + +3);
+    var end =  new Date(options.date.year, options.date.month, endDay);
+    
     start = start.toISOString();
     end = end.toISOString();
 
     Event.find({ 'location':
-      { '$near': [loc[0], loc[1]],
+      { '$near': options.location,
         $maxDistance: maxDistance,
       }, 'time': {
         $gte: start,
@@ -68,7 +63,6 @@ module.exports = function (app) {
     }, function(err, data) {
       if(err) throw err;
       console.log(maxDistance);
-      console.log(loc[0], loc[1]);
       res.send(data);
     });
   });
