@@ -8,7 +8,8 @@ var EventSchema = new Schema ({
   location: {type: [], index: '2d'},
   time: Date,
   photo: Buffer,
-  activity: String
+  activity: String,
+  userId: String
 });
 
 // EventSchema.index({location: '2d'});
