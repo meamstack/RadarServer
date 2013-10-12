@@ -56,10 +56,10 @@ module.exports = function (app) {
       // { '$near': options.location,
     //     $maxDistance: maxDistance,
     //   }, 
-    'time': {
-        $gte: start
+    // 'time': {
+        // $gte: start
         // ,$lte: end
-      }
+      // }
     }, function(err, data) {
       if(err) throw err;
       console.log(data);
