@@ -46,37 +46,41 @@ passport.use(new FacebookStrategy({
         }
       }
 
-      var options = {
-        hostname: 'graph.facebook.com',
-        port: 443,
-        path: '/me?fields=picture.type(large)&access_token=' + accessToken,
-        method: 'GET'
-      };
+      // var options = {
+      //   hostname: 'graph.facebook.com',
+      //   port: 443,
+      //   path: '/me?fields=picture.type(large)&access_token=' + accessToken,
+      //   method: 'GET'
+      // };
 
-      var FBreq = http.request(options, function(FBres) {
+      // var FBreq = http.request(options, function(FBres) {
 
-        FBres.on('data', function(d) {
-          FBresults += d.toString();
-        });
+      //   FBres.on('data', function(d) {
+      //     FBresults += d.toString();
+      //   });
 
-        FBres.on('end', function() {
-          if(err) {
-            console.log(err);
-          } else {
-            var FBresults = JSON.parse(FBresults);
-            var keys = Object.keys(FBresults);
-            for(var key in FBresults) {
-              user.facebook[key] = FBresults[key];
-            }
-            user.save(function(err) {
-              if (err) throw err;
-            });
-            return done(err, user);
-          }
-        });
+      //   FBres.on('end', function() {
+      //     if(err) {
+      //       console.log(err);
+      //     } else {
+      //       var FBresults = JSON.parse(FBresults);
+      //       var keys = Object.keys(FBresults);
+      //       for(var key in FBresults) {
+      //         user.facebook[key] = FBresults[key];
+      //       }
+      //       user.save(function(err) {
+      //         if (err) throw err;
+      //       });
+      //       return done(err, user);
+      //     }
+      //   });
+      // });
+
+      // FBreq.end();
+      user.save(function(err) {
+        if (err) throw err;
       });
-
-      FBreq.end();
+      return done(err, user);
 
     });
   }
