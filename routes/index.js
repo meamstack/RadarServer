@@ -66,6 +66,16 @@ module.exports = function (app) {
     });
   });
 
+  app.get('/api/getUserData', function(req,res,next){
+    User.findById(req.user._id, function(err, user) {
+      if(err) {
+        throw err;
+      } else {
+        res.send(user);
+      }
+    });
+  });
+
   //Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
     display: 'touch',
