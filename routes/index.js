@@ -42,26 +42,27 @@ module.exports = function (app) {
 
   app.post('/api/findEvents', function(req, res, next) {
     var options = req.body;
-    var maxDistance = options.maxD;  // in degrees, if km is necessary, divide by 111.12
+    // var maxDistance = options.maxD;  // in degrees, if km is necessary, divide by 111.12
     // new Date(year, month, day [, hour, minutes, second, milli])
     var start =  new Date(options.date.year, options.date.month, options.date.day);
-  
-    var endDay = JSON.stringify(+options.date.day + +1);
-    var end =  new Date(options.date.year, options.date.month, endDay);
+    // var endDay = JSON.stringify(+options.date.day + +1);
+    // var end =  new Date(options.date.year, options.date.month, endDay);
     
     start = start.toISOString();
-    end = end.toISOString();
+    // end = end.toISOString();
 
-    Event.find({ 'location':
-      { '$near': options.location,
-        $maxDistance: maxDistance,
-      }, 'time': {
-        $gte: start,
-        $lte: end
+    Event.find({ 
+      // 'location':
+      // { '$near': options.location,
+    //     $maxDistance: maxDistance,
+    //   }, 
+    'time': {
+        $gte: start
+        // ,$lte: end
       }
     }, function(err, data) {
       if(err) throw err;
-      console.log(maxDistance);
+      console.log(data);
       res.send(data);
     });
   });
