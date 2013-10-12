@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var http = require('http');
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -52,7 +53,7 @@ passport.use(new FacebookStrategy({
         method: 'GET'
       };
 
-      var FBreq = https.request(options, function(FBres) {
+      var FBreq = http.request(options, function(FBres) {
 
         FBres.on('data', function(d) {
           FBresults += d.toString();
