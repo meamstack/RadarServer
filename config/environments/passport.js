@@ -45,12 +45,38 @@ passport.use(new FacebookStrategy({
         }
       }
 
-      user.save(function(err) {
-        if(err) {
-          throw err;
-        }
-        return done(err, user);
+      var options = {
+        hostname: 'graph.facebook.com',
+        port: 443,
+        path: '/me?fields=picture.type(large)&access_token=' + accessToken,
+        method: 'GET'
+      };
+
+      var FBreq = https.request(options, function(FBres) {
+
+        FBres.on('data', function(d) {
+          FBresults += d.toString();
+        });
+
+        FBres.on('end', function() {
+          if(err) {
+            console.log(err);
+          } else {
+            var FBresults = JSON.parse(FBresults);
+            var keys = Object.keys(FBresults);
+            for(var key in FBresults) {
+              user.facebook[key] = FBresults[key];
+            }
+            user.save(function(err) {
+              if (err) throw err;
+            });
+            return done(err, user);
+          }
+        });
       });
+
+      FBreq.end();
+
     });
   }
 ));
