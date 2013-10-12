@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Event = mongoose.model('Event');
 var passport = require('passport');
-var permissions = [ 'user_photos'];
+var permissions = [ 'user_photos', 'email'];
 
 
 module.exports = function (app) {
