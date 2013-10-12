@@ -2,9 +2,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Event = mongoose.model('Event');
 var passport = require('passport');
-var permissions = [ 'email'];//,
-                    // 'user_photos',
-                    // 'friends_photos',];
+var permissions = [ 'user_photos'];
 
 
 module.exports = function (app) {
@@ -16,6 +14,7 @@ module.exports = function (app) {
 
   app.post('/api/createEvent', function(req, res, next) {
     var eventInfo = req.body;
+    console.log(eventInfo, 'eventinfo');
     Event.findOne({
       'name': eventInfo.name,
       'time': eventInfo.time
@@ -47,7 +46,7 @@ module.exports = function (app) {
     // new Date(year, month, day [, hour, minutes, second, milli])
     var start =  new Date(options.date.year, options.date.month, options.date.day);
   
-    var endDay = JSON.stringify(+options.date.day + +3);
+    var endDay = JSON.stringify(+options.date.day + +1);
     var end =  new Date(options.date.year, options.date.month, endDay);
     
     start = start.toISOString();
