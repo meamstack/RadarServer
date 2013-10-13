@@ -19,6 +19,7 @@ module.exports = function (app) {
     app.set('view engine', 'html');
     app.use(express.favicon());
     app.use(express.logger('dev'));
+    app.use(express.limit(1000000000));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(allowCrossDomain);

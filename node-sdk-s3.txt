@@ -1,0 +1,25 @@
+
+  var s3 = new AWS.S3();
+    s3.createBucket({Bucket: 'douglas'}, function() {
+      var params = {Bucket: 'douglas', Key: proccess.env.AWS_ACCESS_KEY_ID, Body: 'Hello!'};
+      s3.putObject(params, function(err, data) {
+        if (err)
+          console.log(err)
+        else
+          console.log("Successfully uploaded data to myBucket/myKey");
+      });
+    });
+  });
+
+  var addImage = function(image) {
+    var options = {
+      hostname: 'helenimages.s3.amazonaws.com',
+      port: 80,
+      method: 'POST'
+    };
+    var request = http.request(options,function(resposnse) {
+    response.on('data', function(chunk) {
+        console.log('add Image', chunk);
+      });
+    });
+  };

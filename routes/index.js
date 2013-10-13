@@ -3,6 +3,7 @@ var User = mongoose.model('User');
 var Event = mongoose.model('Event');
 var passport = require('passport');
 var permissions = [ 'user_photos', 'email'];
+var AWS = require('aws-sdk');
 
 
 module.exports = function (app) {
@@ -12,18 +13,70 @@ module.exports = function (app) {
     });
   });
 
-  var addImage = function(image) {
-    var options = {
-      hostname: 'helenimages.s3.amazonaws.com',
-      port: 80,
-      method: 'POST'
-    };
-    var request = http.request(options,function(resposnse) {
-    response.on('data', function(chunk) {
-        console.log('add Image', chunk);
-      });
-    });
-  };
+
+
+//  ========================================================================
+//  
+//    app.post('/api/addPhoto', function(req, res, next) {
+//      
+//    console.log(req);
+//    //console.log(req.content-type);
+//    console.log('Body: ',req.body);
+//    //var s3 = new AWS.S3({params: {Bucket: 'helenimages', Key: process.env.AWS_ACCESS_KEY_ID}});
+//    var s3 = new AWS.S3({params: {Bucket: 'helenimages/test/william.json', Body: req.body}});
+//    s3.createBucket(function() {
+//      s3.putObject({Body: req.body}, function() {
+//        console.log("Successfully uploaded data to myBucket/myKey");
+//        res.send('success');
+//      });
+//    });
+//  });
+//  
+//  ========================================================================
+
+
+
+
+
+
+
+
+//  var addImage = function(image) {
+//    var options = {
+//      hostname: 'helenimages.s3.amazonaws.com',
+//      port: 80,
+//      method: 'POST'
+//    };
+//    var request = http.request(options,function(resposnse) {
+//    response.on('data', function(chunk) {
+//        console.log('add Image', chunk);
+//      });
+//    });
+//  };
+//  var s3 = new AWS.S3();
+//    s3.createBucket({Bucket: 'douglas'}, function() {
+//      var params = {Bucket: 'douglas', Key: proccess.env.AWS_ACCESS_KEY_ID, Body: 'Hello!'};
+//      s3.putObject(params, function(err, data) {
+//        if (err)
+//          console.log(err)
+//        else
+//          console.log("Successfully uploaded data to myBucket/myKey");
+//      });
+//    });
+//  });
+//
+//  var addImage = function(image) {
+//    var options = {
+//      hostname: 'helenimages.s3.amazonaws.com',
+//      port: 80,
+//      method: 'POST'
+//    };
+//    var request = http.request(options,function(resposnse) {
+//    response.on('data', function(chunk) {
+//        console.log('add Image', chunk);
+//      });
+//    });
+//  };
 
   app.post('/api/createEvent', function(req, res, next) {
     console.log('in createEvent');
