@@ -20,6 +20,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_MEETME_APIKEY,
   clientSecret: process.env.FACEBOOK_MEETME_APPSECRET,
+  // callbackURL: "http://meetme123.com:3000/auth/facebook/callback"
   callbackURL: "http://edhsieh.com/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
