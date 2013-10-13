@@ -12,6 +12,19 @@ module.exports = function (app) {
     });
   });
 
+  var addImage = function(image) {
+    var options = {
+      hostname: 'helenimages.s3.amazonaws.com',
+      port: 80,
+      method: 'POST'
+    };
+    var request = http.request(options,function(resposnse) {
+    response.on('data', function(chunk) {
+        console.log('add Image', chunk);
+      });
+    });
+  };
+
   app.post('/api/createEvent', function(req, res, next) {
     var eventInfo = req.body;
     console.log(eventInfo, 'eventinfo');
