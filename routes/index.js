@@ -13,6 +13,7 @@ module.exports = function (app) {
   });
 
   app.post('/api/createEvent', function(req, res, next) {
+    console.log('in createEvent');
     var eventInfo = req.body;
     console.log(eventInfo, 'eventinfo');
     Event.findOne({
