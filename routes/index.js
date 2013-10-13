@@ -41,7 +41,8 @@ module.exports = function (app) {
           location: eventInfo.location,
           time: eventInfo.time,
           photo: eventInfo.photo,
-          activity: eventInfo.activity
+          activity: eventInfo.activity,
+          userId: eventInfo.userId
         });
         event.save(function(err) {
           if(err) throw err;
