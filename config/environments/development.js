@@ -10,6 +10,10 @@ module.exports = function (app) {
     var allowCrossDomain = function(req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+      res.header("Access-Control-Allow-Headers", "content-type, accept");
+      res.header("Access-Control-Max-Age", 10);
+      res.header('Content-Type', "text/plain");
       next();
     }
 
@@ -19,7 +23,7 @@ module.exports = function (app) {
     app.set('view engine', 'html');
     app.use(express.favicon());
     app.use(express.logger('dev'));
-    app.use(express.limit(1000000000));
+    app.use(express.limit(100000000));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(allowCrossDomain);
@@ -37,3 +41,4 @@ module.exports = function (app) {
     app.use(express.errorHandler());
   });
 };
+

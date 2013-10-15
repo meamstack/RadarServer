@@ -7,7 +7,7 @@ var EventSchema = new Schema ({
   // location: [],
   location: {type: [], index: '2d'},
   time: Date,
-  photo: Buffer,
+  photo: String,
   activity: String,
   userId: String
 });
