@@ -1,6 +1,8 @@
 var express = require('express');
 var path = require('path');
 var passport = require('passport');
+var mongoStore = require('connect-mongo')(express);
+var mongoose = require('mongoose');
 
 module.exports = function (app) {
   app.configure('development', function () {
@@ -27,8 +29,14 @@ module.exports = function (app) {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(allowCrossDomain);
-    app.use(express.cookieParser('your secret here'));
-    app.use(express.session());
+    app.use(express.cookieParser());
+    app.use(express.session({
+        secret: 'raydar',
+        store: new mongoStore({
+            url: 'mongodb://localhost/meetmeDev',
+            collection: 'sessions'
+        })
+    }));
     //use passport session
     app.use(passport.initialize());
     app.use(passport.session());

@@ -6,6 +6,7 @@ var permissions = [ 'user_photos', 'email'];
 
 module.exports = function (app) {
   app.get('/', function(req, res, next) {
+    res.type('.html');
     res.render('index', {
       title: 'Express'
     });
@@ -65,7 +66,7 @@ module.exports = function (app) {
       // 'time': {
       //   $gte: start
       //   ,$lte: end
-      }
+//      }
     }, function(err, data) {
       if(err) throw err;
       res.send(data);
