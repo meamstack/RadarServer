@@ -20,7 +20,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_MEETME_APIKEY,
   clientSecret: process.env.FACEBOOK_MEETME_APPSECRET,
-  callbackURL: "http://edhsieh.com/auth/facebook/callback"
+  callbackURL: "http://myradar.co/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({'facebook.id': profile.id},function(err, user){
@@ -96,3 +96,4 @@ passport.use(new FacebookStrategy({
     });
   }
 ));
+
