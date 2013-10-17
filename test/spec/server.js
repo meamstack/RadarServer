@@ -67,14 +67,17 @@ describe('api event: create and find', function () {
   evt.date = evt.date.toISOString();
 
   var anotherEvt = {
-
+    testImage: fs.readFileSync(path.join(__dirname,'/hotAir_small.jpg')),
+    loc: [37.6,-122],
+    year: 2013,
+    month: 11,
+    day: 30,
+    name: 'spike\'s new haircut party',
+    desc: 'see his hair go away',
+    uid: 'zbcdefghijklmn1234567'
   };
-
-  var options = JSON.stringify({
-    location: evt.loc,
-    date: { year: evt.year, month: evt.month, day: evt.day},
-    maxD: 1
-  });
+  anotherEvt.date = new Date(anotherEvt.year, anotherEvt.month, anotherEvt.day);
+  anotherEvt.date = anotherEvt.date.toISOString();
 
   var evtDetails = JSON.stringify({
     name: evt.name,
@@ -85,6 +88,17 @@ describe('api event: create and find', function () {
     activity: 'party party',
     userId: evt.uid
   });
+
+  var anotherEvtDetails = JSON.stringify({
+    name: anotherEvt.name,
+    description: anotherEvt.desc,
+    location: anotherEvt.loc,
+    time: anotherEvt.date,
+    photo: anotherEvt.testImage,
+    activity: 'party party',
+    userId: anotherEvt.uid
+  });
+  
 
 
   describe('api/createEvent', function () {
@@ -128,6 +142,11 @@ describe('api event: create and find', function () {
 
 
   describe('api/findEvents', function () {
+    var options = JSON.stringify({
+      location: evt.loc,
+      date: { year: evt.year, month: evt.month, day: evt.day},
+      maxD: 1
+    });
     beforeEach(function(done) {
       server.Event.remove({}, function () {
         request(server.app)
@@ -161,6 +180,27 @@ describe('api event: create and find', function () {
           assert.equal(findEvt.userId, evt.uid);
           // assert.equal(findEvt.location, evt.loc);
           done();
+        });
+    });
+    it('should return multiple events if they meet criteria', function (done) {
+      request(server.app)
+        .post('/api/createEvent')
+        .set('content-type', 'application/json')
+        .send(anotherEvtDetails)
+        .end(function(err, res) { 
+          request(server.app)
+            .post('/api/findEvents')
+            .set('content-type', 'application/json')
+            .send(options)
+            .end(function(err, res) {
+              var evt1 = JSON.parse(res.text)[0];
+              var evt2 = JSON.parse(res.text)[1];
+              assert.equal(evt1.name, evt.name);
+              assert.equal(evt1.userId, evt.uid);
+              assert.equal(evt2.name, anotherEvt.name);
+              assert.equal(evt2.userId, anotherEvt.uid);
+              done();
+            });
         });
     });
   });
