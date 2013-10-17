@@ -53,28 +53,32 @@ describe('facebook login', function () {
 });
 
 describe('api/findEvents', function () {
-  var testImage = fs.readFileSync(path.join(__dirname,'/hotAir_small.jpg'));
-  var loc = [37.800305,-122.409239];
-  var year = 2013;
-  var month = 11
-  var day = 31;
-  var date = new Date(year, month, day);
-  date = date.toISOString();
+  var evt = {}
+  evt.testImage = fs.readFileSync(path.join(__dirname,'/hotAir_small.jpg'));
+  evt.loc = [37.800305,-122.409239];
+  evt.year = 2013;
+  evt.month = 11
+  evt.day = 31;
+  evt.date = new Date(evt.year, evt.month, evt.day);
+  evt.date = evt.date.toISOString();
+  evt.name = 'new years eve ball!';
+  evt.desc = 'end the year with a bang';
+  evt.uid = 'abcdefghijklmn1234567';
 
   var options = JSON.stringify({
-    location: loc,
-    date: { year: year, month: month, day: day},
+    location: evt.loc,
+    date: { year: evt.year, month: evt.month, day: evt.day},
     maxD: 1
   });
 
-  var evt = JSON.stringify({
-    name: 'new years eve ball!',
-    description: 'end the year with a bang',
-    location: loc,
-    time: date,
-    photo: testImage,
+  var evtDetails = JSON.stringify({
+    name: evt.name,
+    description: evt.desc,
+    location: evt.loc,
+    time: evt.date,
+    photo: evt.testImage,
     activity: 'party party',
-    userId: 'abcdefghijklmn1234567'
+    userId: evt.uid
   });
 
   beforeEach(function(done) {
@@ -82,7 +86,7 @@ describe('api/findEvents', function () {
       request(server.app)
         .post('/api/createEvent')
         .set('content-type', 'application/json')
-        .send(evt)
+        .send(evtDetails)
         .end(function(err, res) {
           done();
         });
@@ -105,9 +109,11 @@ describe('api/findEvents', function () {
       .set('content-type', 'application/json')
       .send(options)
       .end(function(err, res) {
-        console.log(typeof res);
-        console.log(res.text)
-        // assert.equal(res., 200);
+        console.log(res);
+        // assert.equal(res[0].name, evt.name);
+        // assert.equal(res[0].userId, evt.uid);
+        // assert.equal(res[0].date, evt.date);
+
         done();
       });
   });

@@ -32,7 +32,7 @@ module.exports = function (app, mongoose) {
     app.use(express.session({
         secret: 'raydar',
         store: new mongoStore({
-            url: 'mongodb://localhost/meetmeDev',
+            url: process.env.RADAR_MONGODB_TEST,
             collection: 'sessions',
             mongoose_connection: mongoose.connection
         })

@@ -2,7 +2,7 @@ var express = require('express');
 var fs = require('fs');
 var path = require('path');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/meetmeDev');
+mongoose.connect(process.env.RADAR_MONGODB_TEST);
 var db = {};
 
 var app = express();
