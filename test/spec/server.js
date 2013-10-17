@@ -18,6 +18,7 @@ describe('Root page', function () {
       .get('/')
       .end(function(err, res) {
         assert.equal(res.statusCode, 200);
+        done();
       });
   });
 });
