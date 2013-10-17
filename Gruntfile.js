@@ -19,6 +19,10 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  var files = {
+    test:'test/spec/server.js'
+  };
+
   try {
     yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
   } catch (e) {}
@@ -93,7 +97,7 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
+        '<%= yeoman.app %>/routes/{,*/}*.js'
       ]
     },
     coffee: {
@@ -258,6 +262,20 @@ module.exports = function (grunt) {
         }
       }
     },
+    mochacov: {
+      test: {
+        src: [files.test]
+      },
+      coverage: {
+        src: [files.tests],
+        options:{
+          coverage: true
+        }
+      },
+      options: {
+        reporter: 'spec'
+      }
+    },
     watch: {
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
@@ -287,6 +305,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-topcoat');
   grunt.loadNpmTasks('grunt-contrib-stylus');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-mocha-cov');
 
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
@@ -303,12 +322,7 @@ module.exports = function (grunt) {
   });
 
 
-  grunt.registerTask('test', [
-    'clean:server',
-    'concurrent:test',
-    'express:test',
-    'karma'
-  ]);
+  grunt.registerTask('test', ['jshint:all', 'mochacov:test']);
 
   grunt.registerTask('build', [
     'clean:dist',

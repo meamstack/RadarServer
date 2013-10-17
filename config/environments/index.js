@@ -1,4 +1,4 @@
-module.exports = function (app) {
-    require('./development')(app);
-    require('./production')(app);
+module.exports = function (app, mongoose) {
+    require('./development')(app, mongoose);
+    // require('./production')(app);
 };
