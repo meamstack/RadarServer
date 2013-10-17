@@ -23,6 +23,7 @@ module.exports = function (app, mongoose) {
     app.engine('html', require('ejs').renderFile);
     app.set('view engine', 'html');
     app.use(express.favicon());
+    app.use(express.static(app.directory+'/app'));
     app.use(express.logger('dev'));
     app.use(express.limit(100000000));
     app.use(express.bodyParser());
