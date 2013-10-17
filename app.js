@@ -15,7 +15,7 @@ var modelsPath = path.join(app.directory, '/server/models');
 fs.readdirSync(modelsPath).forEach(function (file) {
   var name = file.match(/^([a-z]+)\..+$/)[1];
   var name = name.charAt(0).toUpperCase() + name.slice(1);
-  db[name] = require(modelsPath + '/' + file);
+  db[name] = require(modelsPath + '/' + file)();
 });
 
 require(path.join(app.directory, '/config/environments/passport.js'));

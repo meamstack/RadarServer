@@ -1,4 +1,7 @@
-var app = require('./app.js').app;
+var appJs = require('./app.js');
+var app = appJs.app;
+var User = appJs.User;
+var Event = appJs.Event;
 
 require('http').createServer(app).listen(app.get('port'), function () {
     console.log('Express (' + app.get('env') + ') server listening on port ' + app.get('port'));
@@ -7,8 +10,8 @@ require('http').createServer(app).listen(app.get('port'), function () {
 
 // export for tests
 module.exports = {
-  app: require('./app.js').app,
-  User: require('./app.js').db.User,
-  Event: require('./app.js').db.Event
+  app: app,
+  User: User,
+  Event: Event
 };
 
