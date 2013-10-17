@@ -1,16 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var EventSchema = new Schema ({
-  name: String,
-  description: String,
-  // location: [],
-  location: {type: [], index: '2d'},
-  time: Date,
-  photo: String,
-  activity: String,
-  userId: String
-});
+module.exports = function() {
+  var EventSchema = new Schema ({
+    name: String,
+    description: String,
+    // location: [],
+    location: {type: [], index: '2d'},
+    time: Date,
+    photo: String,
+    activity: String,
+    userId: String
+  });
 
-// EventSchema.index({location: '2d'});
-mongoose.model('Event', EventSchema);
+  // EventSchema.index({location: '2d'});
+  return mongoose.model('Event', EventSchema);
+};
