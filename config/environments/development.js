@@ -2,9 +2,8 @@ var express = require('express');
 var path = require('path');
 var passport = require('passport');
 var mongoStore = require('connect-mongo')(express);
-var mongoose = require('mongoose');
 
-module.exports = function (app) {
+module.exports = function (app, mongoose) {
   app.configure('development', function () {
     app.use(function staticsPlaceholder(req, res, next) {
         return next();
@@ -34,7 +33,8 @@ module.exports = function (app) {
         secret: 'raydar',
         store: new mongoStore({
             url: 'mongodb://localhost/meetmeDev',
-            collection: 'sessions'
+            collection: 'sessions',
+            mongoose_connection: mongoose.connection
         })
     }));
     //use passport session
