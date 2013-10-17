@@ -1,5 +1,6 @@
 body{font:12px Helvetica,Arial,sans-serif}
-h1{font-size: 100px;
+h1{
+	font-size: 100px;
 	    margin: 10px;
 	    line-height: 1;
 	    letter-spacing: -1px;
