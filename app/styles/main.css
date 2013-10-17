@@ -1,4 +1,39 @@
-body{font:12px Helvetica,Arial,sans-serif;background:#fafafa;color:#333}
+body{font:12px Helvetica,Arial,sans-serif}
+h1{font-size: 100px;
+	    margin: 10px;
+	    line-height: 1;
+	    letter-spacing: -1px;
+	    color: white;
+	    text-align: center;
+	    text-shadow: 2px 2px 4px black;
+	  }
+h2{
+	font-size: 2.3em;
+	text-align: left;
+	text-shadow: 2px 2px 4px black;
+}
+
+.homeText{
+	font-size: 36px;
+	text-shadow: 2px 2px 2px black;
+	letter-spacing: 1px;
+	line-height: 115%;
+}
 .button{-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:10px}
-.hero-unit{margin:50px auto 0 auto;width:300px;font-size:18px;font-weight:200;line-height:30px;background-color:#eee;border-radius:6px;padding:60px}
-.hero-unit h1{font-size:60px;line-height:1;letter-spacing:-1px}
+.hero-unit{margin:50px auto 0 auto;width:100%;font-size:18px;font-weight:200;border-radius:6px;padding:60px}
+
+div {
+    margin-left: 35%;
+    width: 50%;
+    text-align: left;
+  }
+
+a {
+	color: #e0e0e0;
+}
+
+.homeLinks{
+	font-size:1.5em;
+	text-shadow: 2px 2px 2px black;
+	padding-right: 20px;
+}
