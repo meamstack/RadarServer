@@ -1,4 +1,10 @@
-'use strict';
+var chai = require('chai');
+var assert = chai.assert;
+var expect = chai.expect;
+var async = require('async');
+var Q = require('q');
+var request = require('supertest');
+var app = require('../server.js');
 
 describe('Controller: MainCtrl', function () {
 
@@ -10,10 +16,7 @@ describe('Controller: MainCtrl', function () {
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
-      $scope: scope
-    });
+    
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {

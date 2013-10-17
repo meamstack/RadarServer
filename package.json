@@ -17,7 +17,10 @@
     "passport-facebook": "~1.0.1",
     "aws-sdk": "~1.8.1",
     "knox": "~0.8.6",
-    "connect-mongo": "~0.3.3"
+    "connect-mongo": "~0.3.3",
+    "chai": "~1.8.1",
+    "mocha": "~1.13.0",
+    "sinon": "~1.7.3"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -43,6 +46,13 @@
     "grunt-google-cdn": "~0.2.0",
     "grunt-ngmin": "~0.0.2",
     "grunt-express": "~1.0.0",
-    "grunt-contrib-stylus": "~0.8.0"
+    "grunt-contrib-stylus": "~0.8.0",
+    "supertest": "~0.8.0",
+    "async": "~0.2.9",
+    "mocha": "~1.13.0",
+    "grunt-mocha-test": "~0.7.0",
+    "grunt-mocha-cov": "0.0.7",
+    "mocha-lcov-reporter": "0.0.1",
+    "q": "~0.9.7"
   }
 }

@@ -1,0 +1,68 @@
+{
+  "1":{
+      "name" : "coffee",
+      "description" : "getting coffe with my barber",
+      "time" : "1970-01-01T00:02:03.123Z",
+      "_id" : "5250d91746669971df000001",
+      "location" : [ 
+          "37.7833", 
+          "122.4167"
+      ],
+      "__v" : 0
+  },
+  "2":{
+      "name" : "coffee in hawaii",
+      "description" : "cats cat cats",
+      "time" : "1970-01-01T00:02:03.123Z",
+      "_id" : "5250d95f46669971df000002",
+      "location" : [ 
+          "21.3", 
+          "157.8167"
+      ],
+      "__v" : 0
+  },
+  "3":{
+      "name" : "coffee with john denver",
+      "description" : "eggs on a cliff",
+      "time" : "1970-01-01T00:02:03.123Z",
+      "_id" : "5250d98446669971df000003",
+      "location" : [ 
+          "39.7392", 
+          "104.9847"
+      ],
+      "__v" : 0
+  },
+  "4":{
+      "name" : "coffee @hackR",
+      "description" : "tapout cliff",
+      "time" : "1970-01-01T00:02:03.123Z",
+      "_id" : "5250d9d546669971df000004",
+      "location" : [ 
+          "37.783548", 
+          "-122.408953"
+      ],
+      "__v" : 0
+  },
+  "5":{
+      "name" : "coffee down the street with a hobo",
+      "description" : "polk street",
+      "time" : "1970-01-01T00:02:03.123Z",
+      "_id" : "5250da4d6f6b9f8ce0000001",
+      "location" : [ 
+          "37.788822", 
+          "-122.416141"
+      ],
+      "__v" : 0
+  },
+  "6":{
+      "name" : "tennis at a park",
+      "description" : "PARKS",
+      "time" : "1970-01-01T00:02:03.123Z",
+      "_id" : "5250da766f6b9f8ce0000002",
+      "location" : [ 
+          "37.791416", 
+          "-122.427106"
+      ],
+      "__v" : 0
+  }
+}
