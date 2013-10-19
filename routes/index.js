@@ -11,8 +11,10 @@ var client = knox.createClient({
 });
 
 var s3addPhoto = function(eventId, photo) {
+  photo = photo.slice(2);
+  var jsonPic = {pic: photo};
   var req = client.put('/eventImages/'+eventId+'.json', {
-    'Content-Length': photo.length,
+    'Content-Length': JSON.stringify(jsonPic).length,
     'Content-Type': 'application/json'
   });
   req.on('response', function(res) {
@@ -20,7 +22,6 @@ var s3addPhoto = function(eventId, photo) {
       console.log('saved to %s', req.url);
     }
   });
-  var jsonPic = {pic: photo};
   jsonPic = JSON.stringify(jsonPic);
   req.end(jsonPic);  
 };
@@ -74,7 +75,7 @@ module.exports = function (app) {
           activity: eventInfo.activity,
           userId: eventInfo.userId
         });
-        s3addPhoto(event._id, eventInfo.photo);
+        if(eventInfo.photo) s3addPhoto(event._id, eventInfo.photo);
         event.save(function(err) {
           if(err) throw err;
           res.send('event create');
