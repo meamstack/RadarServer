@@ -3,6 +3,27 @@ var User = mongoose.model('User');
 var Event = mongoose.model('Event');
 var passport = require('passport');
 var permissions = [ 'user_photos', 'email'];
+var knox = require('knox');
+var client = knox.createClient({
+  key: process.env.AWS_ACCESS_KEY_ID,
+  secret: process.env.AWS_SECRET_ACCESS_KEY,
+  bucket: 'helenimages'
+});
+
+var s3addPhoto = function(eventId, photo) {
+  var req = client.put('/eventImages/'+eventId+'.json', {
+    'Content-Length': photo.length,
+    'Content-Type': 'application/json'
+  });
+  req.on('response', function(res) {
+    if(res.statusCode === 200) {
+      console.log('saved to %s', req.url);
+    }
+  });
+  var jsonPic = {pic: photo};
+  jsonPic = JSON.stringify(jsonPic);
+  req.end(jsonPic);  
+};
 
 module.exports = function (app) {
   app.get('/', function(req, res, next) {
@@ -13,9 +34,19 @@ module.exports = function (app) {
   });
 
   app.post('/api/rsvp', function(req, res, next) {
-    var eventId = req.body;
-    console.log(eventId);
-    res.send('success');
+    var uid = req.body.userId;
+    var eid = req.body.eventId;
+    Event.findOne({
+      _id: eid
+    }, function(err, event) {
+      if(event.users.indexOf(uid) === -1){
+        event.users.push(uid); 
+      }
+      event.save(function(err) {
+        if(err) throw err;
+        res.send('saved');
+      });
+    });
   });
 
   app.post('/login', function(req, res, next) {
@@ -39,10 +70,11 @@ module.exports = function (app) {
           description: eventInfo.description,
           location: eventInfo.location,
           time: eventInfo.time,
-          photo: eventInfo.photo,
+          //photo: eventInfo.photo,
           activity: eventInfo.activity,
           userId: eventInfo.userId
         });
+        s3addPhoto(event._id, eventInfo.photo);
         event.save(function(err) {
           if(err) throw err;
           res.send('event create');
@@ -93,10 +125,10 @@ module.exports = function (app) {
   app.get('/auth/facebook', passport.authenticate('facebook', {
     display: 'touch',
     scope: permissions,
-    failureRedirect: '/'
+    failureRedirect: 'http://bing.com'
   }), function(req, res) { res.redirect('/'); });
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    failureRedirect: '/'
+    failureRedirect: 'http://google.com'
   }), function(req, res) { res.redirect('/'); });
 };

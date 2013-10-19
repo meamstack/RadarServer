@@ -10,7 +10,8 @@ module.exports = function() {
     time: Date,
     photo: String,
     activity: String,
-    userId: String
+    userId: String,
+    users: []
   });
 
   // EventSchema.index({location: '2d'});
