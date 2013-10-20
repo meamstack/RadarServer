@@ -1,6 +1,7 @@
 var appJs = require('./app.js');
 var app = appJs.app;
 var User = appJs.User;
+require('console-stamp')(console, 'm/dd HH:mm:ss');
 var Event = appJs.Event;
 
 require('http').createServer(app).listen(app.get('port'), function () {
