@@ -22,7 +22,7 @@ module.exports = function (app, mongoose) {
     app.set('views', path.join(app.directory, '/app'));
     app.engine('html', require('ejs').renderFile);
     app.set('view engine', 'html');
-    app.use(express.favicon());
+    app.use(express.favicon(app.directory+'/app/favicon.ico'));
     app.use(express.static(app.directory+'/app'));
     app.use(express.logger('dev'));
     app.use(express.limit(100000000));
