@@ -6,7 +6,7 @@ API server for Radar iOS App. Node.js, Express.js working with MongoDB and Mongo
 ## Radar Server ##
 The backend for [Radar](https://github.com/meamstack/RadarServer). 
 
-![screenshot](http://farm6.staticflickr.com/5510/10299758175_4889ac6809_o.png)
+![screenshot](http://farm8.staticflickr.com/7375/10426054384_a9839c6cc7_o.png)
 
 ## Tech Stack ##
 * Node.js / Express - core server
