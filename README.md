@@ -15,12 +15,10 @@ The backend for [Radar](https://github.com/meamstack/RadarServer).
 Radar utilises the asyncronous non-blocking features of JavaScript and Node.js for the core of the server. User and event information are stored on a Mongo database.
 
 ## Testing ##
-[ this section tbd ]
-* Mocha / Chai
-* [Travis CI](https://travis-ci.org/guymorita/oaktree)
-* Coveralls
+* Mocha
+* [Supertest](https://github.com/visionmedia/supertest)
 
-Testing is done through the Mocha Chai testing suite, and is automated through Grunt.js. It gets test coverage with Travis-CI/Coveralls.
+Testing is done through the Mocha testing suite, and is automated through Grunt.js. We used the library Supertest to simulate requests and responses to and from the server. 
 
 ## Dependencies ##
 * Node.js
