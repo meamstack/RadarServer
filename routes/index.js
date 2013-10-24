@@ -59,6 +59,9 @@ module.exports = function (app) {
 
   app.post('/api/createEvent', function(req, res, next) {
     var eventInfo = req.body;
+    //var actualHour = parseInt(eventInfo.time.split(' ')[1].split(':')[0])-7;
+    //var newTime = eventInfo.time.replace(/\ \d\d\:/, ' '+actualHour+ ':');
+    newTime = new Date(eventInfo.time);
     Event.findOne({
       'name': eventInfo.name,
       'time': eventInfo.time
@@ -70,7 +73,7 @@ module.exports = function (app) {
           name: eventInfo.name,
           description: eventInfo.description,
           location: eventInfo.location,
-          time: eventInfo.time,
+          time: newTime,
           activity: eventInfo.activity,
           userId: eventInfo.userId
         });
